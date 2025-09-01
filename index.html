@@ -1,761 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BestPDF - Free Online PDF Conversion Tools</title>
-    <meta name="description" content="Free online PDF tools to convert, edit, and transform your documents. Convert JPG to PDF, Word to PDF, PDF to Word, and more with our easy-to-use tools.">
-    <meta name="keywords" content="PDF converter, JPG to PDF, Word to PDF, PDF to Word, online tools, document conversion, free PDF tools">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BestPDF - Free PDF Tools Online</title>
 
-        body {
-            background-color: #1E1E2F;
-            color: #EAEAEA;
-            line-height: 1.6;
-        }
+  <!-- SEO Meta -->
+  <meta name="description" content="BestPDF provides free online PDF tools to merge, split, compress, protect, unlock, rotate and convert PDFs. No installation, 100% secure, works directly in your browser.">
+  <meta name="keywords" content="BestPDF, PDF tools, free PDF converter, merge PDF, split PDF, compress PDF, rotate PDF, reorder PDF, protect PDF, unlock PDF, extract PDF, watermark PDF, HTML to PDF, Text to PDF">
+  <meta name="author" content="BestPDF">
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        /* Header Styles */
-        header {
-            background-color: #2B2D42;
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
+  <style>
+    :root {
+      --primary: #2563eb; /* Blue */
+      --bg: #f8fafc; /* Light background */
+      --card: #ffffff; /* White cards */
+      --text-dark: #1e293b;
+      --hover: #eff6ff;
+    }
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
-        .logo {
-            display: flex;
-            align-items: center;
-        }
+    body { background: var(--bg); color: var(--text-dark); line-height: 1.6; }
 
-        .logo h1 {
-            color: #FFD700;
-            font-size: 1.8rem;
-        }
+    /* Header */
+    header {
+      background: var(--primary);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo { font-size: 1.5rem; font-weight: 700; color: #fff; }
 
-        .logo span {
-            color: #EAEAEA;
-        }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    nav ul li a:hover { opacity: 0.8; }
 
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
+    /* Mobile Nav */
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background: var(--primary);
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        width: 200px;
+        border-radius: 8px;
+        padding: 1rem;
+      }
+      nav ul.active { display: flex; }
+      .menu-toggle { display: block; }
+    }
 
-        nav ul li {
-            margin-left: 25px;
-        }
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--primary);
+      color: white;
+    }
+    .hero h1 { font-size: 2.2rem; margin-bottom: 1rem; font-weight: 700; }
+    .hero p { max-width: 700px; margin: auto; margin-bottom: 1.5rem; font-size: 1.1rem; }
+    .btn-primary {
+      background: white;
+      color: var(--primary);
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    .btn-primary:hover { background: var(--hover); }
 
-        nav ul li a {
-            color: #EAEAEA;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-            padding: 5px 0;
-        }
+    /* Tools Grid */
+    .tools-grid {
+      max-width: 1100px;
+      margin: 3rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      padding: 0 1rem;
+    }
+    .tool-card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+    }
+    .tool-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      background: var(--hover);
+    }
+    .tool-icon { font-size: 2rem; color: var(--primary); margin-bottom: 0.8rem; }
+    .tool-card h3 { font-size: 1.2rem; margin-bottom: 0.4rem; color: var(--text-dark); }
+    .tool-card p { font-size: 0.9rem; margin-bottom: 1.2rem; color: #475569; }
+    .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: opacity 0.3s ease;
+    }
+    .btn:hover { opacity: 0.9; }
 
-        nav ul li a:hover {
-            color: #FFD700;
-        }
+    /* Sections */
+    section { max-width: 1100px; margin: 3rem auto; padding: 0 1rem; }
+    section h2 { color: var(--primary); margin-bottom: 1rem; font-size: 1.6rem; }
+    section p { color: #334155; margin-bottom: 0.8rem; }
 
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #FFD700;
-            transition: width 0.3s;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: #EAEAEA;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 60px 0;
-            text-align: center;
-            background: linear-gradient(to bottom, #2B2D42, #1E1E2F);
-        }
-
-        .hero h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: #FFD700;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-
-        .cta-btn {
-            background-color: #005aff;
-            color: #FFFFFF;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .cta-btn:hover {
-            background-color: #004ecc;
-        }
-
-        /* SEO Content Section */
-        .seo-content {
-            padding: 60px 0;
-            background-color: #25273C;
-        }
-
-        .seo-section {
-            margin-bottom: 50px;
-        }
-
-        .seo-section h2 {
-            color: #005aff;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            border-left: 4px solid #FFD700;
-            padding-left: 15px;
-        }
-
-        .seo-section h3 {
-            color: #005aff;
-            margin: 25px 0 15px;
-            font-size: 1.4rem;
-        }
-
-        .seo-section p {
-            margin-bottom: 15px;
-            line-height: 1.8;
-        }
-
-        .feature-list {
-            margin: 15px 0 15px 30px;
-        }
-
-        .feature-list li {
-            margin-bottom: 10px;
-        }
-
-        /* Tools Section */
-        .tools-section {
-            padding: 60px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 40px;
-            color: #FFD700;
-            font-size: 2rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background-color: #FFD700;
-            margin: 10px auto;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        .tool-card {
-            background-color: #3A3D5B;
-            border-radius: 10px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 250px;
-        }
-
-        .tool-card:hover {
-            background-color: #AAD63C;
-            color: #1E1E2F;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
-        }
-
-        .tool-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #FFD700;
-        }
-
-        .tool-card:hover .tool-icon {
-            color: #1E1E2F;
-        }
-
-        .tool-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .tool-card p {
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
-
-        .btn {
-            background-color: #005aff;
-            color: #FFFFFF;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .btn:hover {
-            background-color: #004ecc;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #2B2D42;
-            padding: 40px 0 20px;
-            text-align: center;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-
-        .footer-section {
-            flex: 1;
-            min-width: 250px;
-            margin-bottom: 20px;
-            padding: 0 15px;
-        }
-
-        .footer-section h3 {
-            color: #FFD700;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-
-        .footer-section p, .footer-section a {
-            color: #EAEAEA;
-            opacity: 0.8;
-            margin-bottom: 10px;
-            display: block;
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
-
-        .footer-section a:hover {
-            opacity: 1;
-            color: #FFD700;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .social-icons a {
-            color: #EAEAEA;
-            font-size: 1.5rem;
-            transition: color 0.3s;
-        }
-
-        .social-icons a:hover {
-            color: #FFD700;
-        }
-
-        .copyright {
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #EAEAEA;
-            opacity: 0.7;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .tools-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav ul {
-                margin-top: 15px;
-                justify-content: center;
-            }
-            
-            nav ul li {
-                margin: 0 10px;
-            }
-            
-            .hero h2 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .mobile-menu-btn {
-                display: block;
-                position: absolute;
-                top: 15px;
-                right: 20px;
-            }
-            
-            nav {
-                display: none;
-                width: 100%;
-                margin-top: 15px;
-            }
-            
-            nav.active {
-                display: block;
-            }
-            
-            nav ul {
-                flex-direction: column;
-            }
-            
-            nav ul li {
-                margin: 10px 0;
-            }
-            
-            .tool-card {
-                padding: 15px;
-                min-height: 220px;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-            }
-            
-            .footer-section {
-                min-width: 100%;
-            }
-        }
-    </style>
+    /* Footer */
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      margin-top: 3rem;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .footer-links a:hover { opacity: 0.8; }
+  </style>
 </head>
 <body>
-    <!-- Header with Navigation -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <h1>Best<span>PDF</span></h1>
-                </div>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <nav id="mainNav">
-                    <ul>
-                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="#tools"><i class="fas fa-tools"></i> Tools</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
-                        <li><a href="#seo-content">Learn More</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h2>All Your PDF Tools in One Place</h2>
-            <p>Convert, edit, and transform your documents with our easy-to-use tools. No installation needed - everything works in your browser!</p>
-            <button class="cta-btn">Get Started for Free</button>
-        </div>
-    </section>
+  <!-- Header -->
+  <header>
+    <div class="logo">BestPDF</div>
+    <nav>
+      <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#learn">Learn More</a></li>
+      </ul>
+    </nav>
+  </header>
 
+  <!-- Hero -->
+  <section class="hero">
+    <h1>All-in-One PDF Tools</h1>
+    <p>Free online PDF converter tools to merge, split, compress, protect and edit your PDF files directly in the browser.</p>
+    <a href="#tools" class="btn-primary">Start Using Free</a>
+  </section>
 
-    <!-- Tools Section -->
-    <section class="tools-section" id="tools">
-        <div class="container">
-            <h2 class="section-title">Our Tools</h2>
-            
-            <div class="tools-grid">
-                <!-- Convert to PDF Tools -->
-                <div class="tool-card">
-                    <div>
-                        <i class="fas fa-image tool-icon"></i>
-                        <h3>JPG → PDF</h3>
-                        <p>Convert your JPG images to PDF documents in seconds</p>
-                    </div>
-                    <a href="image-to-pdf.html" style="text-decoration: none;">
-                    <button class="btn">Use Tool</button>
-                    </a>
-                </div>
+  <!-- Tools -->
+  <section id="tools" class="tools-grid">
+    <div class="tool-card"><i class="fas fa-file-image tool-icon"></i><h3>Image → PDF</h3><p>Convert JPG/PNG images into a single PDF file instantly.</p><a href="#" class="btn">Use Tool</a></div>
+    <div class="tool-card"><i class="fas fa-code tool-icon"></i><h3>Text/HTML → PDF</h3><p>Turn plain text or HTML content into PDF documents easily.</p><a href="#" class="btn">Use Tool</a></div>
+    <div class="tool-card"><i class="fas fa-object-group tool-icon"></i><h3>Merge PDF</h3><p>Combine two or more PDFs into a single file in seconds.</p><a href="#" class="btn">Use Tool</a></div>
+    <div class="tool-card"><i class="fas fa-scissors tool-icon"></i><h3>Split PDF</h3><p>Extract selected pages from your PDF file with ease.</p><a href="#" class="btn">Use Tool</a></div>
+    <div class="tool-card"><i class="fas fa-compress tool-icon"></i><h3>Compress PDF</h3><p>Reduce PDF file size without losing readability.</p><a href="#" class="btn">Use Tool</a></div>
+    <div class="tool-card"><i class="fas fa-water tool-icon"></i><h3>Watermark PDF</h3><p>Add text or image watermarks to your PDF documents.</p><a href="#" class="btn">Use Tool</a></div>
+  </section>
 
-                <div class="tool-card">
-                    <div>
-                        <i class="fas fa-file-word tool-icon"></i>
-                        <h3>Word → PDF</h3>
-                        <p>Convert Microsoft Word documents to PDF format seamlessly</p>
-                    </div>
-                    <a href="word-to-pdf.html" style="text-decoration: none;">
-                    <button class="btn">Use Tool</button>
-                    </a>
-                </div>
+  <!-- Learn More -->
+  <section id="learn">
+    <h2>Why Use BestPDF?</h2>
+    <p>BestPDF offers free online PDF tools that are secure, fast, and work directly in your browser without installation.</p>
+  </section>
 
-                <div class="tool-card">
-                    <div>
-                        <i class="fas fa-file-powerpoint tool-icon"></i>
-                        <h3>PowerPoint → PDF</h3>
-                        <p>Turn your PowerPoint presentations into PDF files</p>
-                    </div>
-                    <a href="powerpoint-to-pdf.html" style="text-decoration: none;">
-                     <button class="btn">Use Tool</button>
-                    </a>
-                </div>
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: support@bestpdf.com | Phone: +1 (123) 456-7890</p>
+  </section>
 
-                <div class="tool-card">
-                    <div>
-                        <i class="fas fa-file-excel tool-icon"></i>
-                        <h3>Excel → PDF</h3>
-                        <p>Convert Excel spreadsheets to PDF format while preserving formatting</p>
-                    </div>
-                    <button class="btn" onclick="redirectToTool('Excel to PDF')">Use Tool</button>
-                </div>
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <p>© 2025 BestPDF. All Rights Reserved.</p>
+  </footer>
 
-                <div class="tool-card">
-                    <div>
-                        <i class="fas fa-code tool-icon"></i>
-                        <h3>HTML → PDF</h3>
-                        <p>Convert web pages and HTML code to PDF documents</p>
-                    </div>
-                    <button class="btn" onclick="redirectToTool('HTML to PDF')">Use Tool</button>
-                </div>
-
-                <!-- Convert from PDF Tools -->
-                <div class="tool-card">
-                    <div>
-                        <i class="fas fa-file-image tool-icon"></i>
-                        <h3>PDF → JPG</h3>
-                        <p>Extract images from PDF or convert PDF pages to JPG format</p>
-                    </div>
-                    <button class="btn" onclick="redirectToTool('PDF to JPG')">Use Tool</button>
-                </div>
-
-                <div class="tool-card">
-                    <div>
-                        <i class="fas fa-file-alt tool-icon"></i>
-                        <h3>PDF → Word</h3>
-                        <p>Convert PDF files to editable Word documents with high accuracy</p>
-                    </div>
-                    <button class="btn" onclick="redirectToTool('PDF to Word')">Use Tool</button>
-                </div>
-
-                <div class="tool-card">
-                    <div>
-                        <i class="fas fa-file-powerpoint tool-icon"></i>
-                        <h3>PDF → PowerPoint</h3>
-                        <p>Convert PDF files to editable PowerPoint presentations</p>
-                    </div>
-                    <button class="btn" onclick="redirectToTool('PDF to PowerPoint')">Use Tool</button>
-                </div>
-
-                <div class="tool-card">
-                    <div>
-                        <i class="fas fa-file-excel tool-icon"></i>
-                        <h3>PDF → Excel</h3>
-                        <p>Convert PDF tables to editable Excel spreadsheets</p>
-                    </div>
-                    <button class="btn" onclick="redirectToTool('PDF to Excel')">Use Tool</button>
-                </div>
-
-                <div class="tool-card">
-                    <div>
-                        <i class="fas fa-file-contract tool-icon"></i>
-                        <h3>PDF → PDF/A</h3>
-                        <p>Convert PDF files to the archival PDF/A format for long-term preservation</p>
-                    </div>
-                    <button class="btn" onclick="redirectToTool('PDF to PDF/A')">Use Tool</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SEO Content Section -->
-    <section class="seo-content" id="seo-content">
-        <div class="container">
-            <div class="seo-section">
-                <h2>Why Use Our PDF Conversion Tools?</h2>
-                <p>In today's digital world, PDF documents have become the standard for sharing information while preserving formatting across different devices and platforms. However, we often need to convert these files to other formats for editing, presentation, or compatibility purposes. Our BestPDF provides a comprehensive suite of PDF conversion tools that are fast, secure, and incredibly easy to use.</p>
-                
-                <p>Whether you're a student needing to convert lecture notes, a professional working with business documents, or someone who needs to archive important files, our tools are designed to meet all your conversion needs without requiring technical expertise.</p>
-            </div>
-
-            <div class="seo-section">
-                <h2>Convert to PDF Tools</h2>
-                
-                <h3>JPG to PDF Converter</h3>
-                <p>Our JPG to PDF converter allows you to transform your images into professional PDF documents. This tool is perfect for creating portfolios, preserving photo quality, or combining multiple images into a single document. Whether you have product images, scanned documents, or personal photos, our converter maintains image quality while creating a versatile PDF file.</p>
-                <ul class="feature-list">
-                    <li>Preserve image quality during conversion</li>
-                    <li>Combine multiple JPG images into a single PDF</li>
-                    <li>Maintain proper aspect ratio and resolution</li>
-                    <li>Perfect for portfolios, presentations, and archives</li>
-                </ul>
-
-                <h3>Word to PDF Converter</h3>
-                <p>Convert your Microsoft Word documents to PDF format with perfect formatting preservation. Our Word to PDF converter ensures that all your fonts, images, tables, and formatting remain exactly as intended. This is essential for sharing documents that need to look professional and remain uneditable.</p>
-                <ul class="feature-list">
-                    <li>Maintain original formatting and layout</li>
-                    <li>Preserve hyperlinks, images, and tables</li>
-                    <li>Create professional, uneditable documents</li>
-                    <li>Ideal for resumes, contracts, and official documents</li>
-                </ul>
-
-                <h3>PowerPoint to PDF Converter</h3>
-                <p>Transform your PowerPoint presentations into PDF documents that anyone can view, regardless of whether they have presentation software installed. Our converter preserves all your slides, animations (as static images), and notes, making it perfect for sharing presentations with clients or classmates.</p>
-                <ul class="feature-list">
-                    <li>Convert each slide to a PDF page</li>
-                    <li>Preserve slide notes and comments</li>
-                    <li>Maintain image quality and layout</li>
-                    <li>Perfect for distributing presentations</li>
-                </ul>
-
-                <h3>Excel to PDF Converter</h3>
-                <p>Convert your Excel spreadsheets to PDF format to preserve data formatting and prevent accidental changes. Our Excel to PDF converter ensures that your formulas, charts, and data tables appear exactly as intended, making it ideal for financial reports, data analysis, and business documents.</p>
-                <ul class="feature-list">
-                    <li>Maintain spreadsheet formatting</li>
-                    <li>Preserve formulas as values</li>
-                    <li>Convert charts and graphs accurately</li>
-                    <li>Perfect for financial reports and data sharing</li>
-                </ul>
-
-                <h3>HTML to PDF Converter</h3>
-                <p>Convert web pages or HTML code to PDF documents with our advanced HTML to PDF converter. This tool is perfect for saving web content for offline reading, creating archives of web pages, or converting HTML-based reports to a more portable format.</p>
-                <ul class="feature-list">
-                    <li>Capture entire web pages as PDF</li>
-                    <li>Preserve links and formatting</li>
-                    <li>Perfect for archiving web content</li>
-                    <li>Great for saving online receipts or confirmations</li>
-                </ul>
-            </div>
-
-            <div class="seo-section">
-                <h2>Convert from PDF Tools</h2>
-                
-                <h3>PDF to JPG Converter</h3>
-                <p>Extract images from PDF files or convert entire PDF pages to JPG format with our PDF to JPG converter. This tool is perfect for recovering images from documents, creating thumbnails, or preparing content for websites and social media.</p>
-                <ul class="feature-list">
-                    <li>Extract high-quality images from PDFs</li>
-                    <li>Convert specific pages or entire documents</li>
-                    <li>Adjust image quality and resolution</li>
-                    <li>Perfect for web content and social media</li>
-                </ul>
-
-                <h3>PDF to Word Converter</h3>
-                <p>Convert your PDF documents back to editable Word format with remarkable accuracy. Our PDF to Word converter preserves formatting, tables, and even complex layouts, making it easy to edit documents that were originally shared as PDFs.</p>
-                <ul class="feature-list">
-                    <li>Maintain original formatting and layout</li>
-                    <li>Preserve tables, images, and hyperlinks</li>
-                    <li>High accuracy text recognition</li>
-                    <li>Perfect for editing previously locked documents</li>
-                </ul>
-
-                <h3>PDF to PowerPoint Converter</h3>
-                <p>Transform your PDF documents into editable PowerPoint presentations. Our PDF to PowerPoint converter extracts content and recreates slides that you can then edit, redesign, or use as a starting point for new presentations.</p>
-                <ul class="feature-list">
-                    <li>Convert PDF pages to individual slides</li>
-                    <li>Preserve images and basic formatting</li>
-                    <li>Create editable presentation content</li>
-                    <li>Perfect for repurposing existing content</li>
-                </ul>
-
-                <h3>PDF to Excel Converter</h3>
-                <p>Extract tables and data from PDF documents into editable Excel spreadsheets. Our PDF to Excel converter accurately recognizes and transfers tabular data, saving you hours of manual data entry.</p>
-                <ul class="feature-list">
-                    <li>Accurately detect and convert tables</li>
-                    <li>Preserve data structure and formatting</li>
-                    <li>Recognize numbers and text with high accuracy</li>
-                    <li>Perfect for financial data extraction</li>
-                </ul>
-
-                <h3>PDF to PDF/A Converter</h3>
-                <p>Convert standard PDF files to the archival PDF/A format for long-term preservation. PDF/A is an ISO-standardized version of PDF designed for digital preservation, ensuring that documents can be reproduced exactly the same way years later.</p>
-                <ul class="feature-list">
-                    <li>Create ISO-standard archival documents</li>
-                    <li>Ensure long-term accessibility</li>
-                    <li>Remove content not suitable for preservation</li>
-                    <li>Perfect for legal documents and important records</li>
-                </ul>
-            </div>
-
-            <div class="seo-section">
-                <h2>Why Choose BestPDF?</h2>
-                <p>Our PDF conversion tools stand out from the competition for several reasons:</p>
-                <ul class="feature-list">
-                    <li><strong>Security:</strong> All file processing happens directly in your browser - we don't store your files on our servers</li>
-                    <li><strong>Quality:</strong> We prioritize maintaining the highest quality during conversions</li>
-                    <li><strong>Speed:</strong> Our tools are optimized for fast processing, even with large files</li>
-                    <li><strong>Ease of Use:</strong> Simple, intuitive interfaces that anyone can use without training</li>
-                    <li><strong>No Registration Required:</strong> Start converting immediately without creating an account</li>
-                    <li><strong>Free to Use:</strong> Most of our tools are completely free with optional premium features</li>
-                </ul>
-            </div>
-
-            <div class="seo-section">
-                <h2>Frequently Asked Questions</h2>
-                
-                <h3>Are these tools really free to use?</h3>
-                <p>Yes, all our basic conversion tools are completely free to use. We may offer premium features in the future for advanced needs, but the core functionality will always remain free.</p>
-                
-                <h3>Is my data secure when using your tools?</h3>
-                <p>Absolutely. All file processing happens directly in your browser, which means your files never leave your computer. We don't upload them to any server, ensuring complete privacy and security.</p>
-                
-                <h3>What file sizes can I convert?</h3>
-                <p>Our tools can handle most common file sizes. For optimal performance, we recommend files under 100MB. Larger files may take more time to process depending on your internet connection and device capabilities.</p>
-                
-                <h3>Do I need to create an account?</h3>
-                <p>No, you can use all our tools without creating an account or providing any personal information. Just select the tool you need and start converting immediately.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>BestPDF</h3>
-                    <p>Your all-in-one solution for document conversion and manipulation tools.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="#">Home</a>
-                    <a href="#tools">Tools</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Contact Us</a>
-                    <a href="#">privacy Policy</a>
-                    <a href="#">Terms & Condition</a>
-                    
-                    
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-envelope"></i> support@multitoolhub.com</p>
-                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 BestPDF. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Function for button click alerts
-        function redirectToTool(toolName) {
-            alert(`Redirecting to ${toolName} tool on BestPDF`);
-            // In a real implementation, this would redirect to the actual tool page
-            // window.location.href = `https://bestpdf.com/${toolName.replace(/\s+/g, '-').toLowerCase()}`;
-        }
-
-        // Mobile menu toggle functionality
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            const nav = document.getElementById('mainNav');
-            nav.classList.toggle('active');
-            
-            // Change icon based on menu state
-            const icon = this.querySelector('i');
-            if (nav.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                const nav = document.getElementById('mainNav');
-                if (nav.classList.contains('active')) {
-                    nav.classList.remove('active');
-                    const icon = document.querySelector('.mobile-menu-btn i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
-        });
-    </script>
+  <!-- JS for Mobile Menu -->
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('nav ul');
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
