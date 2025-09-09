@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare PDF - BestPDF Tools</title>
+    <meta name="description" content="Compare two PDF documents - Free online PDF tool.">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header" role="banner">
+        <nav class="nav-container" role="navigation">
+            <div class="nav-brand">
+                <h1 class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
+                    <i class="fas fa-file-pdf"></i>
+                    BestPDF Tools
+                </h1>
+            </div>
+
+            <div class="nav-actions">
+                <button id="themeToggle" class="theme-toggle btn btn--outline" type="button">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle btn btn--outline" type="button">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="index.html">Home</a> 
+            <i class="fas fa-chevron-right"></i> 
+            <span>Compare PDF</span>
+        </nav>
+
+        <!-- Tool Header -->
+        <div class="tool-header">
+            <div class="tool-icon">
+                <i class="fas fa-balance-scale"></i>
+            </div>
+            <div class="tool-info">
+                <h1>Compare PDF</h1>
+                <p>Compare two PDF documents</p>
+                <div class="tool-specs">
+                    <span>Accepts: .pdf</span>
+                    <span>Output: .pdf</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Upload Area -->
+        <div class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                <h3>Drop files here or click to upload</h3>
+                <p>Supported formats: .pdf</p>
+                <input type="file" id="fileInput" accept=".pdf" style="display: none;">
+                <button class="btn btn--primary" onclick="document.getElementById('fileInput').click()">
+                    Select Files
+                </button>
+            </div>
+
+            <!-- File List -->
+            <div class="file-list" id="fileList" style="display: none;">
+                <h3>Selected Files:</h3>
+                <div id="selectedFiles"></div>
+                <button class="btn btn--success" id="processBtn" onclick="processFiles()">
+                    <i class="fas fa-cog"></i>
+                    Process Files
+                </button>
+            </div>
+
+            <!-- Processing Area -->
+            <div class="processing-area" id="processingArea" style="display: none;">
+                <h3>Processing...</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="processingText">Preparing files...</p>
+            </div>
+
+            <!-- Download Area -->
+            <div class="download-area" id="downloadArea" style="display: none;">
+                <h3>Processing Complete!</h3>
+                <div class="download-file">
+                    <i class="fas fa-file-download"></i>
+                    <span id="downloadFileName">converted-file.pdf</span>
+                    <button class="btn btn--primary" id="downloadBtn">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </button>
+                </div>
+                <button class="btn btn--outline" onclick="resetTool()">
+                    Process Another File
+                </button>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <h2>Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure</h3>
+                    <p>Your files are processed securely and never stored on our servers.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Fast</h3>
+                    <p>Quick processing with optimized algorithms for best performance.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>BestPDF Tools</h3>
+                <p>Professional PDF solutions for all your document needs.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Tools</h4>
+                <a href="index.html">All Tools</a>
+                <a href="merge-pdf.html">Merge PDF</a>
+                <a href="split-pdf.html">Split PDF</a>
+                <a href="compress-pdf.html">Compress PDF</a>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <a href="#">Contact Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 BestPDF Tools. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tool-specific JavaScript
+        let selectedFiles = [];
+
+        // File upload handling
+        document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+        document.getElementById('uploadArea').addEventListener('dragover', handleDragOver);
+        document.getElementById('uploadArea').addEventListener('drop', handleDrop);
+
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            addFiles(files);
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            document.getElementById('uploadArea').classList.add('drag-over');
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            document.getElementById('uploadArea').classList.remove('drag-over');
+            const files = Array.from(event.dataTransfer.files);
+            addFiles(files);
+        }
+
+        function addFiles(files) {
+            selectedFiles = files;
+            displaySelectedFiles();
+            document.getElementById('fileList').style.display = 'block';
+        }
+
+        function displaySelectedFiles() {
+            const container = document.getElementById('selectedFiles');
+            container.innerHTML = '';
+
+            selectedFiles.forEach((file, index) => {
+                const fileDiv = document.createElement('div');
+                fileDiv.className = 'selected-file';
+                fileDiv.innerHTML = `
+                    <i class="fas fa-file"></i>
+                    <span>${file.name}</span>
+                    <span class="file-size">${formatFileSize(file.size)}</span>
+                `;
+                container.appendChild(fileDiv);
+            });
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function processFiles() {
+            document.getElementById('fileList').style.display = 'none';
+            document.getElementById('processingArea').style.display = 'block';
+
+            // Simulate processing
+            let progress = 0;
+            const progressFill = document.getElementById('progressFill');
+            const processingText = document.getElementById('processingText');
+
+            const messages = [
+                'Analyzing files...',
+                'Processing compare pdf...',
+                'Optimizing output...',
+                'Finalizing...'
+            ];
+
+            const interval = setInterval(() => {
+                progress += 25;
+                progressFill.style.width = progress + '%';
+
+                if (progress <= 100) {
+                    const messageIndex = Math.floor((progress - 1) / 25);
+                    if (messages[messageIndex]) {
+                        processingText.textContent = messages[messageIndex];
+                    }
+                }
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('processingArea').style.display = 'none';
+                        document.getElementById('downloadArea').style.display = 'block';
+                        setupDownload();
+                    }, 500);
+                }
+            }, 800);
+        }
+
+        function setupDownload() {
+            const downloadBtn = document.getElementById('downloadBtn');
+            const fileName = `converted-file-${Date.now()}.pdf`;
+            document.getElementById('downloadFileName').textContent = fileName;
+
+            downloadBtn.onclick = function() {
+                // Create a dummy file for download
+                const content = 'This is a simulated converted file from BestPDF Tools.';
+                const blob = new Blob([content], { type: 'application/octet-stream' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            };
+        }
+
+        function resetTool() {
+            selectedFiles = [];
+            document.getElementById('fileList').style.display = 'none';
+            document.getElementById('processingArea').style.display = 'none';
+            document.getElementById('downloadArea').style.display = 'none';
+            document.getElementById('fileInput').value = '';
+            document.getElementById('progressFill').style.width = '0%';
+        }
+
+        // Theme toggle
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-theme');
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-theme')) {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        });
+    </script>
+</body>
+</html>
