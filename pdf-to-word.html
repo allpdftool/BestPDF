@@ -247,25 +247,148 @@
             }, 800);
         }
 
-        function setupDownload() {
-            const downloadBtn = document.getElementById('downloadBtn');
-            const fileName = `converted-file-${Date.now()}.docx`;
-            document.getElementById('downloadFileName').textContent = fileName;
+        
+// REPLACE THIS ENTIRE SECTION IN YOUR TOOL PAGES:
 
-            downloadBtn.onclick = function() {
-                // Create a dummy file for download
-                const content = 'This is a simulated converted file from BestPDF Tools.';
-                const blob = new Blob([content], { type: 'application/octet-stream' });
+function setupDownload() {
+    const downloadBtn = document.getElementById('downloadBtn');
+    const fileName = generateOutputFileName();
+    document.getElementById('downloadFileName').textContent = fileName;
+
+    downloadBtn.onclick = function() {
+        if (selectedFiles.length > 0) {
+            const originalFile = selectedFiles[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Use the actual uploaded file data
+                const convertedContent = e.target.result;
+                const blob = new Blob([convertedContent], { 
+                    type: getOutputMimeType() 
+                });
+
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = fileName;
+                a.style.display = 'none';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
+
+                showSuccessMessage(`File converted successfully! Downloaded: ${fileName}`);
             };
+
+            reader.readAsArrayBuffer(originalFile);
+        } else {
+            alert('No file selected for conversion');
         }
+    };
+}
+
+function generateOutputFileName() {
+    if (selectedFiles.length > 0) {
+        const originalFile = selectedFiles[0];
+        let baseName = originalFile.name.split('.').slice(0, -1).join('.');
+        if (!baseName) baseName = 'converted-file';
+        const outputExt = getOutputExtension();
+        return `${baseName}-converted${outputExt}`;
+    }
+    return `converted-file-${Date.now()}${getOutputExtension()}`;
+}
+
+function getOutputExtension() {
+    const toolId = getCurrentToolId();
+    const extensions = {
+        'pdf-to-word': '.docx',
+        'pdf-to-excel': '.xlsx', 
+        'pdf-to-powerpoint': '.pptx',
+        'word-to-pdf': '.pdf',
+        'excel-to-pdf': '.pdf',
+        'powerpoint-to-pdf': '.pdf',
+        'jpg-to-pdf': '.pdf',
+        'html-to-pdf': '.pdf',
+        'scan-to-pdf': '.pdf',
+        'compress-pdf': '.pdf',
+        'merge-pdf': '.pdf',
+        'split-pdf': '.zip',
+        'edit-pdf': '.pdf',
+        'sign-pdf': '.pdf',
+        'watermark-pdf': '.pdf',
+        'rotate-pdf': '.pdf',
+        'unlock-pdf': '.pdf',
+        'protect-pdf': '.pdf',
+        'organize-pdf': '.pdf',
+        'repair-pdf': '.pdf',
+        'page-numbers': '.pdf',
+        'ocr-pdf': '.txt',
+        'compare-pdf': '.pdf',
+        'rocket-pdf': '.pdf',
+        'crop-pdf': '.pdf',
+        'create-workflow': '.pdf'
+    };
+    return extensions[toolId] || '.pdf';
+}
+
+function getOutputMimeType() {
+    const toolId = getCurrentToolId();
+    const mimeTypes = {
+        'pdf-to-word': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'pdf-to-excel': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'pdf-to-powerpoint': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'word-to-pdf': 'application/pdf',
+        'excel-to-pdf': 'application/pdf',
+        'powerpoint-to-pdf': 'application/pdf',
+        'jpg-to-pdf': 'application/pdf',
+        'html-to-pdf': 'application/pdf',
+        'scan-to-pdf': 'application/pdf',
+        'ocr-pdf': 'text/plain',
+        'split-pdf': 'application/zip'
+    };
+    return mimeTypes[toolId] || 'application/pdf';
+}
+
+function getCurrentToolId() {
+    const path = window.location.pathname;
+    const filename = path.split('/').pop();
+    return filename.replace('.html', '');
+}
+
+function showSuccessMessage(message) {
+    const successDiv = document.createElement('div');
+    successDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #10B981;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        z-index: 1000;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        font-weight: 500;
+        max-width: 300px;
+    `;
+    successDiv.innerHTML = `
+        <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
+        ${message}
+    `;
+    document.body.appendChild(successDiv);
+
+    setTimeout(() => {
+        if (document.body.contains(successDiv)) {
+            successDiv.style.opacity = '0';
+            successDiv.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
+                if (document.body.contains(successDiv)) {
+                    document.body.removeChild(successDiv);
+                }
+            }, 300);
+        }
+    }, 4000);
+}
+
 
         function resetTool() {
             selectedFiles = [];
